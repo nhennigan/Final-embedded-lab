@@ -1,0 +1,7 @@
+both.txt
+errors.txt
+file.txt
+task1.sh
+task2.sh
+task3.sh
+task4.sh

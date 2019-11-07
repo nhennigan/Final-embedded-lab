@@ -1,0 +1,12 @@
+total 0
+-rw-rw-rw- 1 niamhhennigan niamhhennigan   0 Sep 28 13:37 file.txt
+-rwxrwxrwx 1 niamhhennigan niamhhennigan 235 Sep 28 13:23 task1.sh
+-rwxrwxrwx 1 niamhhennigan niamhhennigan 126 Sep 28 13:29 task2.sh
+-rwxrwxrwx 1 niamhhennigan niamhhennigan  86 Sep 28 13:34 task3.sh
+-rwxrwxrwx 1 niamhhennigan niamhhennigan  91 Sep 28 13:36 task4.sh
+total 0
+-rw-rw-rw- 1 niamhhennigan niamhhennigan 343 Sep 28 13:37 file.txt
+-rwxrwxrwx 1 niamhhennigan niamhhennigan 235 Sep 28 13:23 task1.sh
+-rwxrwxrwx 1 niamhhennigan niamhhennigan 126 Sep 28 13:29 task2.sh
+-rwxrwxrwx 1 niamhhennigan niamhhennigan  86 Sep 28 13:34 task3.sh
+-rwxrwxrwx 1 niamhhennigan niamhhennigan  91 Sep 28 13:36 task4.sh

@@ -1,0 +1,5 @@
+echo "this is a text file"
+echo "it is running as a bash script"
+
+
+echo "to make it executable just put bash in front of the name i.e. bash text.txt"
