@@ -1,0 +1,204 @@
+##########1
+
+from sense_hat import SenseHat
+from time import sleep
+def clear_leds(sense):
+
+0 = [255,255,255]
+cleared = [
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0]
+sense.set_pixles(cleared)
+
+ ##
+## Reset the values of the sensehat to 0
+ ##
+sense = SenseHat()
+clear_leds(sense)
+
+sense.set_pixels(1,4,255,0,0)
+sense.set_pixels(2,4,255, 0, 0)
+sense.set_pixels(3,4,255, 0, 0)
+sense.set_pixels(4,4,255, 0, 0)
+sense.set_pixels(5,4,255, 0, 0)
+sense.set_pixels(3,3,0, 255, 0)
+sense.set_pixels(3,4,0, 255, 0)
+sense.set_pixels(3,5,0, 255, 0)
+sense.set_pixels(3,6,0, 255, 0)
+
+sense.set_pixel(1,4,(255,0,0))
+sense.set_pixel(2,4,(255, 0, 0))
+sense.set_pixel(3,4,(255, 0, 0))
+sense.set_pixel(4,4,(255, 0, 0))
+sense.set_pixel(5,4,(255, 0, 0))
+sense.set_pixel(3,3,(0, 255, 0))
+sense.set_pixel(3,4,(0, 255, 0))
+sense.set_pixel(3,5,(0, 255, 0))
+sense.set_pixel(3,6,(0, 255, 0))
+sense.set_pixel(3,2,(0, 255, 0))
+
+
+
+
+##################2
+  GNU nano 2.9.3                              challenge2.py                                        
+from sense_hat import SenseHat
+from time import sleep
+from PIL import Image
+import numpy as np
+#import scipy.io
+
+
+def load_image(values,sense):
+pixel_width = 6
+image_width = pixel_width*8
+sense_pixels = []
+start_pixel = 0
+while start_pixel < (image_width*64):
+    sense_pixels.extend(values[start_pixel:(
+start_pixel+image_width):pixel_width])
+    start_pixel += (image_width*pixel_width)
+sense.set_pixels(sense_pixels)
+
+
+ ## ##
+## Insert code Here ##
+ ## ##
+def clear_leds(sense):
+ ##
+## Reset the values of the sensehat to 0
+ ##
+path_to_file = “Link to image file”
+im = Image.open(path_to_file)
+rgb_im=im.convert('RGB')
+values=np.array(rgb_im)
+sense=SenseHat()
+clear_leds(sense)
+load_image(values,sense)
+sense.flip_v()
+sense.set_rotation(270)
+
+
+
+
+
+
+
+#############3
+from sense_hat import SenseHat
+import numpy as np
+from time import sleep
+
+###########################
+import ranodm
+def add_dangerous_pixels(sense,nr_dang_pix):
+ dangerous_coord = [] # list where all the x,y coordinates are stored
+ for i in range(0,nr_dang_pix):
+        sense.set_pixel(random.randint(0,7),random.randint(0,7),(255,0,0))
+ ##
+ ## randomly choose x,y coordinates for the dangerous pixels
+ ##
+ dangerous_coord.append(candidate_pixel)
+ return dangerous_coord
+def check_boundary(x,y):
+        if x<0 or x>7
+
+        if y<0 or y>7
+ ##
+ ## Add code to check if x,y are going beyond the limits of the matrix
+ ##
+ return x,y
+sense = SenseHat()
+sense.clear()
+number_of_dangerous_pixels = 4
+dangerous_coord = add_dangerous_pixels(sense, number_of_dangerous_pixels)
+
+## Adding dangerous pixels to the LED matrix:
+for set in dangerous_coord:
+ print (set)
+ sense.set_pixel(set[0],set[1],r)
+white=(255,255,255)
+x,y=6,6 # location where the moving pixel is being ‘spawned’
+sense.set_pixel(x,y,white)
+## Set wining pixel
+goal_pixel=(2,2)
+##################
+goal_pixel=(random.randint(0,7),random.randint(0,7))
+##
+## Add code to generate “objective pixel”
+##
+sense.set_pixel(goal_pixel[0],goal_pixel[1],0,255,0)
+alive=True # flag to check where the moving pixel is located
+
+while alive:
+ for event in sense.stick.get_events():
+          if event.direction=='up':
+                 sense.set_pixel(x,y,0,0,0)
+                 y-=1
+                 x,y=check_boundary(x,y)
+                 sense.set_pixel(x,y,white)
+         if event.direction=='down':
+                 sense.set_pixel(x,y,0,0,0)
+                 y+=1
+                 x,y=check_boundary(x,y)
+                 sense.set_pixel(x,y,white)
+         if event.direction=='left':
+                 sense.set_pixel(x,y,0,0,0)
+                 x-=1
+                 x,y=check_boundary(x,y)
+                 sense.set_pixel(x,y,white)
+         if event.direction=='right':
+                 sense.set_pixel(x,y,0,0,0)
+                 x+=1
+                 x,y=check_boundary(x,y)
+                 sense.set_pixel(x,y,white)
+         if (x,y) in dangerous_coord:
+                 sense.show_message('Game over')
+                 print('Game Over')
+                                 print('Game Over')
+                 alive=False # Game is over, because you lost
+         if (x,y) == (goal_pixel[0],goal_pixel[1]):
+                 sense.show_message('Victory')                                                                      alive=False # Game is over, because you won.
+
+
+
+
+
+
+
+#############4
+from sense_hat import SenseHat
+from time import sleep
+
+sense = SenseHat()
+
+red = (255,0,0)
+green = (0,255,0)
+orange = (255,165,0)
+
+while True:
+        acceleration = sense.get_accelerometer_raw()
+        x = acceleration['x']
+        y = acceleration['y']
+        z = acceleration['z']
+
+        x = abs(x)
+        y = abs(y)
+        z = abs(z)
+
+        if x > 1 and x < 2 or y > 1 and y < 2  or z > 1 and z < 2:
+                sense.set_pixels(green)
+        else if x > 2 and x < 3 or y > 2 and y < 3 or z > 2 and z < 3:
+                for i in range(0,9)
+                        sense.set_pixels(orange)
+                        sense.clear
+         else if x > 4 and x < 4 or y > 3 and y < 4 or z > 3 and z < 4:
+                sense.set_pixels(red)
+
+

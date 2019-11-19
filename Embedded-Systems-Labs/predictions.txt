@@ -1,0 +1,67 @@
+pi@raspberrypi:~/lab9/ESAP9/squeeze$ python3 lemon.jpeg
+  File "lemon.jpeg", line 1
+SyntaxError: Non-UTF-8 code starting with '\xff' in file lemon.jpeg on line 1, but no encoding declared; see http://python.org/dev/peps/pep-0263/ for details
+pi@raspberrypi:~/lab9/ESAP9/squeeze$ python3 deeplearning.py lemon.jpeg
+/usr/lib/python3.5/importlib/_bootstrap.py:222: RuntimeWarning: compiletime version 3.4 of module 'tensorflow.python.framework.fast_tensor_util' does not match runtime version 3.5
+  return f(*args, **kwds)
+/usr/lib/python3.5/importlib/_bootstrap.py:222: RuntimeWarning: builtins.type size changed, may indicate binary incompatibility. Expected 432, got 412
+  return f(*args, **kwds)
+Converted network data(<class 'numpy.float32'>): 0.017089s
+Network instance created: 1.462309s
+
+class: [951] 'n07749582 lemon' with 94.54% confidence
+
+
+
+pi@raspberrypi:~/lab9/ESAP9/squeeze$ python3 deeplearning.py car.jpg   
+/usr/lib/python3.5/importlib/_bootstrap.py:222: RuntimeWarning: compiletime version 3.4 of module 'tensorflow.python.framework.fast_tensor_util' does not match runtime version 3.5
+  return f(*args, **kwds)
+/usr/lib/python3.5/importlib/_bootstrap.py:222: RuntimeWarning: builtins.type size changed, may indicate binary incompatibility. Expected 432, got 412
+  return f(*args, **kwds)
+Converted network data(<class 'numpy.float32'>): 0.009586s
+Network instance created: 1.539921s
+
+class: [817] 'n04285008 sports car, sport car' with 93.29% confidence
+
+
+
+
+pi@raspberrypi:~/lab9/ESAP9/squeeze$ python3 deeplearning.py mushroom.JPG
+/usr/lib/python3.5/importlib/_bootstrap.py:222: RuntimeWarning: compiletime version 3.4 of module 'tensorflow.python.framework.fast_tensor_util' does not match runtime version 3.5
+  return f(*args, **kwds)
+/usr/lib/python3.5/importlib/_bootstrap.py:222: RuntimeWarning: builtins.type size changed, may indicate binary incompatibility. Expected 432, got 412
+  return f(*args, **kwds)
+Converted network data(<class 'numpy.float32'>): 0.009092s
+Network instance created: 1.400856s
+
+class: [992] 'n12998815 agaric' with 97.72% confidence
+
+
+
+
+pi@raspberrypi:~/lab9/ESAP9/squeeze$ python3 deeplearning.py pineapple.jpg
+/usr/lib/python3.5/importlib/_bootstrap.py:222: RuntimeWarning: compiletime version 3.4 of module 'tensorflow.python.framework.fast_tensor_util' does not match runtime version 3.5
+  return f(*args, **kwds)
+/usr/lib/python3.5/importlib/_bootstrap.py:222: RuntimeWarning: builtins.type size changed, may indicate binary incompatibility. Expected 432, got 412
+  return f(*args, **kwds)
+Converted network data(<class 'numpy.float32'>): 0.009714s
+Network instance created: 1.460776s
+
+class: [953] 'n07753275 pineapple, ananas' with 100.00% confidence
+pi@raspberrypi:~/lab9/ESAP9/squeeze$ 
+
+
+
+
+
+pi@raspberrypi:~/lab9/ESAP9/squeeze$ python3 deeplearning.py strawberry.jpg
+/usr/lib/python3.5/importlib/_bootstrap.py:222: RuntimeWarning: compiletime version 3.4 of module 'tensorflow.python.framework.fast_tensor_util' does not match runtime version 3.5
+  return f(*args, **kwds)
+/usr/lib/python3.5/importlib/_bootstrap.py:222: RuntimeWarning: builtins.type size changed, may indicate binary incompatibility. Expected 432, got 412
+  return f(*args, **kwds)
+Converted network data(<class 'numpy.float32'>): 0.009213s
+Network instance created: 1.393589s
+
+class: [949] 'n07745940 strawberry' with 99.99% confidence
+
+
