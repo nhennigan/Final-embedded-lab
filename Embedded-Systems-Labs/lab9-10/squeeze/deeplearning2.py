@@ -197,7 +197,7 @@ def main():
         lines = csv.reader(f,delimiter=",")
         for row in lines:
             array.append(row)
-    print(array)
+#    print(array)
     for j in array:
         labels.append(j[0])
         files.append(j[1])    

@@ -245,7 +245,7 @@ def main():
         graph_from_disk = f.read()
     graph = mvnc.Graph("Tiny Yolo Graph")
     fifo_in, fifo_out = #TODO: graph.allocate_with_fifos(device, graph_file_buffer) 
-
+    #may need another line here 
 
     #Instantiate fifo_in and fifo_out using the graph file above. 
 

@@ -260,7 +260,7 @@ def main():
         frame=vs.read()# Get a frame from a video stream. 
         input_image=frame.copy()# copy frame to an input image. 
 ################################################# may need to be put in a different dir &1/2 sec 
-	os.chdir('/Embedded-Systems-Labs/lab9-10/ESAP9/yolo/task7_images')
+#	os.chdir('/Embedded-Systems-Labs/lab9-10/ESAP9/yolo/task7_images')
         display_image = cv2.resize(input_image, (NETWORK_IMAGE_WIDTH, NETWORK_IMAGE_HEIGHT), cv2.INTER_LINEAR)
         input_image = cv2.resize(input_image, (NETWORK_IMAGE_WIDTH, NETWORK_IMAGE_HEIGHT), cv2.INTER_LINEAR)
         input_image = input_image.astype(np.float32)
