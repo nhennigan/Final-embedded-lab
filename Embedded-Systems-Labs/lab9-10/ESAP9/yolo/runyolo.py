@@ -11,7 +11,7 @@ import time
 from imutils.video import VideoStream
 
 #########################################################################
-tiny_yolo_graph_file= graph 
+tiny_yolo_graph_file= "graph" 
 
 
 NETWORK_IMAGE_WIDTH = 448
@@ -248,11 +248,11 @@ def main():
         graph_from_disk = f.read()
     graph = mvnc.Graph("Tiny Yolo Graph")
 ############################################################################
-    fifo_in, fifo_out = graph.allocate_with_fifos(device, graph_file_buffer)
+    fifo_in, fifo_out = graph.allocate_with_fifos(device, graph_from_disk)
 
 #may need another line here from cheat sheet
 
-#   fifo_in, fifo_out = graph.allocate_with_fifos(device, graph_file_buffer,
+#   fifo_in, fifo_out = graph.allocate_with_fifos(device, graph_from_disk,
 #       fifo_in_type=mvnc.FifoType.HOST_WO, fifo_in_data_type=mvnc.FifoDataType.FP32,
 #   fifo_in_num_elem=2,
 #       fifo_out_type=mvnc.FifoType.HOST_RO, fifo_out_data_type=mvnc.FifoDataType.FP32,
@@ -272,11 +272,12 @@ def main():
 ##############################################################################
         input_image = (255.0/input_image.max())
 #could also be this 
+	#input_image = input_image/255
 	#input_image[:] = ((input_image[:] )*(1.0/255.0))
         input_image = input_image[:, :, ::-1]  # convert to RGB
 
         #TODO: Use the queue_inference_with_fifo_elem to load the image and get the result from the NCS. This should be one line of code.
-	graph.queue_inference_with_fifo_elem(fifo_in, fifo_out, input_image,'user object')        
+	graph.queue_inference_with_fifo_elem(fifo_in, fifo_out, input_image,'userobj')        
 
         output, userobj = fifo_out.read_elem()
 

@@ -243,76 +243,77 @@ def display_objects_in_gui(source_image, filtered_objects):
 # This function is called from the entry point to do
 # all the work.
 def main():
-    vs=VideoStream(usePiCamera=True).start()
-    time.sleep(1)
-    print('Running NCS Caffe TinyYolo example')
+    while True:
+        vs=VideoStream(usePiCamera=True).start()
+        time.sleep(1)
+        print('Running NCS Caffe TinyYolo example')
 
     # Set logging level to only log errors
-    mvnc.global_set_option(mvnc.GlobalOption.RW_LOG_LEVEL, 3)
+        mvnc.global_set_option(mvnc.GlobalOption.RW_LOG_LEVEL, 3)
 ###########################################################################
-    devices = mvnc.enumerate_devices()
-    if len(devices) == 0:
-        print('No devices found')
-        return 1
+        devices = mvnc.enumerate_devices()
+        if len(devices) == 0:
+            print('No devices found')
+            return 1
 ###########################################################################
-    device = mvnc.Device(devices[0]) 
-    device.open()
+        device = mvnc.Device(devices[0]) 
+        device.open()
 
     #Load graph from disk and allocate graph via API
-    with open(tiny_yolo_graph_file, mode='rb') as f:
-        graph_from_disk = f.read()
-    graph = mvnc.Graph("Tiny Yolo Graph")
+        with open(tiny_yolo_graph_file, mode='rb') as f:
+            graph_from_disk = f.read()
+        graph = mvnc.Graph("Tiny Yolo Graph")
 ############################################################################
-    fifo_in, fifo_out = graph.allocate_with_fifos(device, graph_from_disk)
+        fifo_in, fifo_out = graph.allocate_with_fifos(device, graph_from_disk)
 
 #may need another line here from cheat sheet
 
-#   fifo_in, fifo_out = graph.allocate_with_fifos(device, graph_from_disk,
-#       fifo_in_type=mvnc.FifoType.HOST_WO, fifo_in_data_type=mvnc.FifoDataType.FP32,
-#   fifo_in_num_elem=2,
-#       fifo_out_type=mvnc.FifoType.HOST_RO, fifo_out_data_type=mvnc.FifoDataType.FP32,
-#   fifo_out_num_elem=2)
+#       fifo_in, fifo_out = graph.allocate_with_fifos(device, graph_from_disk,
+#           fifo_in_type=mvnc.FifoType.HOST_WO, fifo_in_data_type=mvnc.FifoDataType.FP32,
+#       fifo_in_num_elem=2,
+#           fifo_out_type=mvnc.FifoType.HOST_RO, fifo_out_data_type=mvnc.FifoDataType.FP32,
+#       fifo_out_num_elem=2)
 
     # Read image from file, resize it to network width and height
     # save a copy in display_image for display, then convert to float32, normalize (divide by 255),
     # and finally convert to convert to float16 to pass to LoadTensor as input for an inference
     
-    while True:
+        while True:
         
-        frame=vs.read()# Get a frame from a video stream. 
-        input_image=frame.copy()# copy frame to an input image. 
-        display_image = cv2.resize(input_image, (NETWORK_IMAGE_WIDTH, NETWORK_IMAGE_HEIGHT), cv2.INTER_LINEAR)
-        input_image = cv2.resize(input_image, (NETWORK_IMAGE_WIDTH, NETWORK_IMAGE_HEIGHT), cv2.INTER_LINEAR)
-        input_image = input_image.astype(np.float32)
+            frame=vs.read()# Get a frame from a video stream. 
+            input_image=frame.copy()# copy frame to an input image. 
+            display_image = cv2.resize(input_image, (NETWORK_IMAGE_WIDTH, NETWORK_IMAGE_HEIGHT), cv2.INTER_LINEAR)
+            input_image = cv2.resize(input_image, (NETWORK_IMAGE_WIDTH, NETWORK_IMAGE_HEIGHT), cv2.INTER_LINEAR)
+            input_image = input_image.astype(np.float32)
 ##############################################################################
-        input_image = (255.0/input_image.max())
+            input_image = (255.0/input_image.max())
 #could also be this 
 	#   input_image = input_image/255
     	#   input_image[:] = ((input_image[:] )*(1.0/255.0))
-        input_image = input_image[:, :, ::-1]  # convert to RGB
+            input_image = input_image[:, :, ::-1]  # convert to RGB
 
         #TODO: Use the queue_inference_with_fifo_elem to load the image and get the result from the NCS. This should be one line of code.
-    	graph.queue_inference_with_fifo_elem(fifo_in, fifo_out, input_image,'userobj')        
+       	    graph.queue_inference_with_fifo_elem(fifo_in, fifo_out, input_image,'userobj')        
 
-        output, userobj = fifo_out.read_elem()
+            output, userobj = fifo_out.read_elem()
 
         # filter out all the objects/boxes that don't meet thresholds
-        filtered_objs = filter_objects(output.astype(np.float32), input_image.shape[1], input_image.shape[0])
+            filtered_objs = filter_objects(output.astype(np.float32), input_image.shape[1], input_image.shape[0])
 
 ##############################################################
-        save_box(filtered_objs,display_image)
+	    save_box(filtered_objs,display_image)
 
-        print('Displaying image with objects detected in GUI')
-        print('Click in the GUI window and hit any key to exit')
+            print('Displaying image with objects detected in GUI')
+            print('Click in the GUI window and hit any key to exit')
         #display the filtered objects/boxes in a GUI window
-        display_objects_in_gui(display_image, filtered_objs)
+            display_objects_in_gui(display_image, filtered_objs)
 
-    fifo_in.destroy()
-    fifo_out.destroy()
-    graph.destroy()
-    device.close()
-    device.destroy()
-    #time.sleep(.5)
+        fifo_in.destroy()
+        fifo_out.destroy()
+        graph.destroy()
+        device.close()
+        device.destroy()
+	time.sleep(.5)
     print('Finished')
 
 

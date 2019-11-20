@@ -8,6 +8,9 @@ import time
 import sys
 from PIL import Image
 
+added=[]
+before=[]
+
 def imread_resize(path):
     img_orig = scipy.misc.imread(path)
     img = scipy.misc.imresize(img_orig, (227, 227)).astype(np.float)
@@ -209,49 +212,50 @@ def getNewFile
 #	if added: print "added"
 #	if removed: print "removed"
 	before = after
-        return added[0]
+        return added
 
 def main():
 ########################
     while True:
-        imgname = getNewFile
-        if imgname == null:
-	    time.sleep(1)
-            pass
+       # imgname = getNewFile
+        for imgname in getNewFile():
+            if imgname == null:
+      	        time.sleep(1)
+                pass
 
     # Loading image
-        img_content, orig_shape = imread_resize(imgname)
-        img_content_shape = (1,) + img_content.shape
+            img_content, orig_shape = imread_resize(imgname)
+            img_content_shape = (1,) + img_content.shape
 
     # Loading ImageNet classes info
-        classes = []
-        with open('synset_words.txt', 'r') as classes_file:
-            classes = classes_file.read().splitlines()
+            classes = []
+            with open('synset_words.txt', 'r') as classes_file:
+                classes = classes_file.read().splitlines()
 
     # Loading network
-        data, sqz_mean = load_net('sqz_full.mat')
+            data, sqz_mean = load_net('sqz_full.mat')
 
-        config = tf.ConfigProto(log_device_placement=False)
-        config.gpu_options.allow_growth = True
-        config.gpu_options.allocator_type = 'BFC'
+            config = tf.ConfigProto(log_device_placement=False)
+            config.gpu_options.allow_growth = True
+            config.gpu_options.allocator_type = 'BFC'
 
-        g = tf.Graph()
+            g = tf.Graph()
 
     # 1st pass - simple classification
-        with g.as_default(), tf.Session(config=config) as sess:
+            with g.as_default(), tf.Session(config=config) as sess:
         # Building network
-            image = tf.placeholder(dtype=get_dtype_tf(), shape=img_content_shape, name="image_placeholder")
-            keep_prob = tf.placeholder(get_dtype_tf())
-            sqznet = net_preloaded(data, image, 'max', True, keep_prob)
+                image = tf.placeholder(dtype=get_dtype_tf(), shape=img_content_shape, name="image_placeholder")
+                keep_prob = tf.placeholder(get_dtype_tf())
+                sqznet = net_preloaded(data, image, 'max', True, keep_prob)
 
         # Classifying
-            sqznet_results = \
-            sqznet['classifier_actv'].eval(feed_dict={image: [preprocess(img_content, sqz_mean)], keep_prob: 1.})[0][0][0]
+                sqznet_results = \
+                sqznet['classifier_actv'].eval(feed_dict={image: [preprocess(img_content, sqz_mean)], keep_prob: 1.})[0][0][0]
 
         # Outputting result
-            sqz_class = np.argmax(sqznet_results)
-            print(
-            "\nclass: [%d] '%s' with %5.2f%% confidence" % (sqz_class, classes[sqz_class], sqznet_results[sqz_class] * 100))
+                sqz_class = np.argmax(sqznet_results)
+                print(
+                 "\nclass: [%d] '%s' with %5.2f%% confidence" % (sqz_class, classes[sqz_class], sqznet_results[sqz_class] * 100))
 	    
 ####################
 #sqz_class-1 -2 -3 -4 -5 
