@@ -186,44 +186,76 @@ def _pool_layer(net, name, input, pooling, size=(2, 2), stride=(3, 3), padding='
     net[name] = x
     return x
 
+###########################
+def watch_file(time_limit=3600, check_interval=2 ):
+    now = time.time()
+    last_time = now + time_limit
+
+    while time.time() <= last_time:
+        if os.path.exists():
+            return True
+        else:
+            time.sleep(check_interval)
+    return False
+
+def getNewFile
+    path_to_watch = 'Embedded-Systems-Labs/lab9-10/ESAP9/yolo/task7_images'
+    before = dict ([f,None) for f in os.listdir (path_to_watch)])
+    while 1:
+        time.sleep(2)
+        after = dict ([f,None) for f in os.listdir (path_to_watch)])
+	added = [f for f in after if not f in before]
+     	removed = [f for f in before if not f in after]
+	if added: print "added"
+	if removed: print "removed"
+	before = after
+        return added[0]
 
 def main():
-    imgname=sys.argv[1]
+########################
+    while True:
+        imgname = getNewFile
+        if imgname == null:
+	    time.sleep(1)
+            pass
 
     # Loading image
-    img_content, orig_shape = imread_resize(imgname)
-    img_content_shape = (1,) + img_content.shape
+        img_content, orig_shape = imread_resize(imgname)
+        img_content_shape = (1,) + img_content.shape
 
     # Loading ImageNet classes info
-    classes = []
-    with open('synset_words.txt', 'r') as classes_file:
-        classes = classes_file.read().splitlines()
+        classes = []
+        with open('synset_words.txt', 'r') as classes_file:
+            classes = classes_file.read().splitlines()
 
     # Loading network
-    data, sqz_mean = load_net('sqz_full.mat')
+        data, sqz_mean = load_net('sqz_full.mat')
 
-    config = tf.ConfigProto(log_device_placement=False)
-    config.gpu_options.allow_growth = True
-    config.gpu_options.allocator_type = 'BFC'
+        config = tf.ConfigProto(log_device_placement=False)
+        config.gpu_options.allow_growth = True
+        config.gpu_options.allocator_type = 'BFC'
 
-    g = tf.Graph()
+        g = tf.Graph()
 
     # 1st pass - simple classification
-    with g.as_default(), tf.Session(config=config) as sess:
+        with g.as_default(), tf.Session(config=config) as sess:
         # Building network
-        image = tf.placeholder(dtype=get_dtype_tf(), shape=img_content_shape, name="image_placeholder")
-        keep_prob = tf.placeholder(get_dtype_tf())
-        sqznet = net_preloaded(data, image, 'max', True, keep_prob)
+            image = tf.placeholder(dtype=get_dtype_tf(), shape=img_content_shape, name="image_placeholder")
+            keep_prob = tf.placeholder(get_dtype_tf())
+            sqznet = net_preloaded(data, image, 'max', True, keep_prob)
 
         # Classifying
-        sqznet_results = \
-        sqznet['classifier_actv'].eval(feed_dict={image: [preprocess(img_content, sqz_mean)], keep_prob: 1.})[0][0][0]
+            sqznet_results = \
+            sqznet['classifier_actv'].eval(feed_dict={image: [preprocess(img_content, sqz_mean)], keep_prob: 1.})[0][0][0]
 
         # Outputting result
-        sqz_class = np.argmax(sqznet_results)
-        print(
-        "\nclass: [%d] '%s' with %5.2f%% confidence" % (sqz_class, classes[sqz_class], sqznet_results[sqz_class] * 100))
+            sqz_class = np.argmax(sqznet_results)
+            print(
+            "\nclass: [%d] '%s' with %5.2f%% confidence" % (sqz_class, classes[sqz_class], sqznet_results[sqz_class] * 100))
 
+####################
+#sqz_class-1 -2 -3 -4 -5 
 
+ 
 if __name__ == '__main__':
     main()
