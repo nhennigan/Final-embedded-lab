@@ -9,10 +9,9 @@ import numpy as np
 import cv2
 import time
 from imutils.video import VideoStream
-###############################
-import os
 
-tiny_yolo_graph_file= #TODO: graph 
+#########################################################################
+tiny_yolo_graph_file= graph 
 
 
 NETWORK_IMAGE_WIDTH = 448
@@ -28,8 +27,8 @@ def filter_objects(inference_result, input_image_width, input_image_height):
                                "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike",
                                "person", "pottedplant", "sheep", "sofa", "train","tvmonitor"]
 
-    probability_threshold = #TODO:0.7 
-
+###########################################################################
+    probability_threshold = 0.7
     num_classifications = len(network_classifications) # should be 20
     grid_size = 7 # the image is a 7x7 grid.  Each box in the grid is 64x64 pixels
     boxes_per_grid_cell = 2 # the number of boxes returned for each grid cell
@@ -84,7 +83,8 @@ def filter_objects(inference_result, input_image_width, input_image_height):
     classes_boxes_and_probs = []
     for i in range(len(boxes_above_threshold)):
         classes_boxes_and_probs.append([network_classifications[classifications_for_boxes_above[i]],boxes_above_threshold[i][0],boxes_above_threshold[i][1],boxes_above_threshold[i][2],boxes_above_threshold[i][3],probabilities_above_threshold[i]])
-
+########################################################################
+        classes_boxes_and_probs[0].save("Embedded-Systems-Labs/lab9-10/ESAP9/yolo/task7_images")
     return classes_boxes_and_probs
 
 # creates a mask to remove duplicate objects (boxes) and their related probabilities and classifications
@@ -229,62 +229,73 @@ def display_objects_in_gui(source_image, filtered_objects):
 # This function is called from the entry point to do
 # all the work.
 def main():
-    vs=VideoStream(usePiCamera=True).start()
-    time.sleep(1)
-    print('Running NCS Caffe TinyYolo example')
+    while True:
+        vs=VideoStream(usePiCamera=True).start()
+        time.sleep(1)
+        print('Running NCS Caffe TinyYolo example')
 
     # Set logging level to only log errors
-    mvnc.global_set_option(mvnc.GlobalOption.RW_LOG_LEVEL, 3)
-    devices = #TODO mvnc.enumerate_devices()
-    if len(devices) == 0:
-        print('No devices found')
-        return 1
-    device = #TODO:mvnc.Device(devices[0])   use the mvnc API to assign the first device in devices to the device variable. 
-    device.open()
+        mvnc.global_set_option(mvnc.GlobalOption.RW_LOG_LEVEL, 3)
+###########################################################################
+        devices = mvnc.enumerate_devices()
+        if len(devices) == 0:
+            print('No devices found')
+            return 1
+###########################################################################
+        device = mvnc.Device(devices[0]) 
+        device.open()
 
     #Load graph from disk and allocate graph via API
-    with open(tiny_yolo_graph_file, mode='rb') as f:
-        graph_from_disk = f.read()
-    graph = mvnc.Graph("Tiny Yolo Graph")
-    fifo_in, fifo_out = #TODO: graph.allocate_with_fifos(device, graph_file_buffer) 
+        with open(tiny_yolo_graph_file, mode='rb') as f:
+            graph_from_disk = f.read()
+        graph = mvnc.Graph("Tiny Yolo Graph")
+############################################################################
+        fifo_in, fifo_out = graph.allocate_with_fifos(device, graph_file_buffer)
 
+#may need another line here from cheat sheet
 
-    #Instantiate fifo_in and fifo_out using the graph file above. 
+#       fifo_in, fifo_out = graph.allocate_with_fifos(device, graph_file_buffer,
+#           fifo_in_type=mvnc.FifoType.HOST_WO, fifo_in_data_type=mvnc.FifoDataType.FP32,
+#       fifo_in_num_elem=2,
+#           fifo_out_type=mvnc.FifoType.HOST_RO, fifo_out_data_type=mvnc.FifoDataType.FP32,
+#       fifo_out_num_elem=2)
 
     # Read image from file, resize it to network width and height
     # save a copy in display_image for display, then convert to float32, normalize (divide by 255),
     # and finally convert to convert to float16 to pass to LoadTensor as input for an inference
     
-    while True:
+        while True:
         
-        frame=vs.read()# Get a frame from a video stream. 
-        input_image=frame.copy()# copy frame to an input image. 
-################################################# may need to be put in a different dir &1/2 sec 
-#	os.chdir('/Embedded-Systems-Labs/lab9-10/ESAP9/yolo/task7_images')
-        display_image = cv2.resize(input_image, (NETWORK_IMAGE_WIDTH, NETWORK_IMAGE_HEIGHT), cv2.INTER_LINEAR)
-        input_image = cv2.resize(input_image, (NETWORK_IMAGE_WIDTH, NETWORK_IMAGE_HEIGHT), cv2.INTER_LINEAR)
-        input_image = input_image.astype(np.float32)
-        input_image = # TODO: Scale values between 0 and 255   *= (255.0/image.max())
-        input_image = input_image[:, :, ::-1]  # convert to RGB
+            frame=vs.read()# Get a frame from a video stream. 
+            input_image=frame.copy()# copy frame to an input image. 
+            display_image = cv2.resize(input_image, (NETWORK_IMAGE_WIDTH, NETWORK_IMAGE_HEIGHT), cv2.INTER_LINEAR)
+            input_image = cv2.resize(input_image, (NETWORK_IMAGE_WIDTH, NETWORK_IMAGE_HEIGHT), cv2.INTER_LINEAR)
+            input_image = input_image.astype(np.float32)
+##############################################################################
+            input_image = (255.0/input_image.max())
+#could also be this 
+    	#   input_image[:] = ((input_image[:] )*(1.0/255.0))
+            input_image = input_image[:, :, ::-1]  # convert to RGB
 
-        #TODO: graph.queue_inference_with_fifo_elem(input_fifo, output_fifo, input_image, 'user object') 
-        #Use the queue_inference_with_fifo_elem to load the image and get the result from the NCS. This should be one line of code.
-        
-        output, userobj = fifo_out.read_elem()
+        #TODO: Use the queue_inference_with_fifo_elem to load the image and get the result from the NCS. This should be one line of code.
+       	    graph.queue_inference_with_fifo_elem(fifo_in, fifo_out, input_image,'user object')        
+
+            output, userobj = fifo_out.read_elem()
 
         # filter out all the objects/boxes that don't meet thresholds
-        filtered_objs = filter_objects(output.astype(np.float32), input_image.shape[1], input_image.shape[0])
+            filtered_objs = filter_objects(output.astype(np.float32), input_image.shape[1], input_image.shape[0])
 
-        print('Displaying image with objects detected in GUI')
-        print('Click in the GUI window and hit any key to exit')
+            print('Displaying image with objects detected in GUI')
+            print('Click in the GUI window and hit any key to exit')
         #display the filtered objects/boxes in a GUI window
-        display_objects_in_gui(display_image, filtered_objs)
+            display_objects_in_gui(display_image, filtered_objs)
 
-    fifo_in.destroy()
-    fifo_out.destroy()
-    graph.destroy()
-    device.close()
-    device.destroy()
+        fifo_in.destroy()
+        fifo_out.destroy()
+        graph.destroy()
+        device.close()
+        device.destroy()
+	time.sleep(.5)
     print('Finished')
 
 

@@ -187,16 +187,16 @@ def _pool_layer(net, name, input, pooling, size=(2, 2), stride=(3, 3), padding='
     return x
 
 ###########################
-def watch_file(time_limit=3600, check_interval=2 ):
-    now = time.time()
-    last_time = now + time_limit
+#def watch_file(time_limit=3600, check_interval=2 ):
+#   now = time.time()
+#   last_time = now + time_limit
 
-    while time.time() <= last_time:
-        if os.path.exists():
-            return True
-        else:
-            time.sleep(check_interval)
-    return False
+#   while time.time() <= last_time:
+#       if os.path.exists():
+#           return True
+#       else:
+#           time.sleep(check_interval)
+#   return False
 
 def getNewFile
     path_to_watch = 'Embedded-Systems-Labs/lab9-10/ESAP9/yolo/task7_images'
@@ -206,8 +206,8 @@ def getNewFile
         after = dict ([f,None) for f in os.listdir (path_to_watch)])
 	added = [f for f in after if not f in before]
      	removed = [f for f in before if not f in after]
-	if added: print "added"
-	if removed: print "removed"
+#	if added: print "added"
+#	if removed: print "removed"
 	before = after
         return added[0]
 
@@ -252,7 +252,7 @@ def main():
             sqz_class = np.argmax(sqznet_results)
             print(
             "\nclass: [%d] '%s' with %5.2f%% confidence" % (sqz_class, classes[sqz_class], sqznet_results[sqz_class] * 100))
-
+	    
 ####################
 #sqz_class-1 -2 -3 -4 -5 
 
