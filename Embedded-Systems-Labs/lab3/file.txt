@@ -1,12 +1,30 @@
-total 0
--rw-rw-rw- 1 niamhhennigan niamhhennigan   0 Sep 28 13:37 file.txt
+total 4
+-rw--w--w- 1 niamhhennigan niamhhennigan   0 Nov 27 20:33 both.txt
+-rwxrwxrwx 1 niamhhennigan niamhhennigan 319 Oct  3 09:14 challenge1.sh
+-rw-rw-rw- 1 niamhhennigan niamhhennigan  56 Nov 27 20:33 errors.txt
+-rw-rw-rw- 1 niamhhennigan niamhhennigan   0 Nov 27 20:33 file.txt
+-rw-rw-rw- 1 niamhhennigan niamhhennigan  17 Oct  4 12:21 newfile
+-rw-rw-rw- 1 niamhhennigan niamhhennigan   0 Sep 28 13:38 permissions.txt
+-rw-rw-rw- 1 niamhhennigan niamhhennigan  57 Oct  8 21:51 quiz
+-rw------- 1 niamhhennigan niamhhennigan  21 Sep 28 14:22 saved_password.txt
+-rw-rw-rw- 1 niamhhennigan niamhhennigan  26 Oct  4 12:11 shell
 -rwxrwxrwx 1 niamhhennigan niamhhennigan 235 Sep 28 13:23 task1.sh
 -rwxrwxrwx 1 niamhhennigan niamhhennigan 126 Sep 28 13:29 task2.sh
 -rwxrwxrwx 1 niamhhennigan niamhhennigan  86 Sep 28 13:34 task3.sh
--rwxrwxrwx 1 niamhhennigan niamhhennigan  91 Sep 28 13:36 task4.sh
-total 0
--rw-rw-rw- 1 niamhhennigan niamhhennigan 343 Sep 28 13:37 file.txt
+-rwxrwxrwx 1 niamhhennigan niamhhennigan 107 Nov 27 20:33 task4.sh
+-rw-rw-rw- 1 niamhhennigan niamhhennigan 150 Sep 28 14:28 text.txt
+total 4
+-rw--w--w- 1 niamhhennigan niamhhennigan   0 Nov 27 20:33 both.txt
+-rwxrwxrwx 1 niamhhennigan niamhhennigan 319 Oct  3 09:14 challenge1.sh
+-rw-rw-rw- 1 niamhhennigan niamhhennigan  56 Nov 27 20:33 errors.txt
+-rw-rw-rw- 1 niamhhennigan niamhhennigan 962 Nov 27 20:33 file.txt
+-rw-rw-rw- 1 niamhhennigan niamhhennigan  17 Oct  4 12:21 newfile
+-rw-rw-rw- 1 niamhhennigan niamhhennigan   0 Sep 28 13:38 permissions.txt
+-rw-rw-rw- 1 niamhhennigan niamhhennigan  57 Oct  8 21:51 quiz
+-rw------- 1 niamhhennigan niamhhennigan  21 Sep 28 14:22 saved_password.txt
+-rw-rw-rw- 1 niamhhennigan niamhhennigan  26 Oct  4 12:11 shell
 -rwxrwxrwx 1 niamhhennigan niamhhennigan 235 Sep 28 13:23 task1.sh
 -rwxrwxrwx 1 niamhhennigan niamhhennigan 126 Sep 28 13:29 task2.sh
 -rwxrwxrwx 1 niamhhennigan niamhhennigan  86 Sep 28 13:34 task3.sh
--rwxrwxrwx 1 niamhhennigan niamhhennigan  91 Sep 28 13:36 task4.sh
+-rwxrwxrwx 1 niamhhennigan niamhhennigan 107 Nov 27 20:33 task4.sh
+-rw-rw-rw- 1 niamhhennigan niamhhennigan 150 Sep 28 14:28 text.txt

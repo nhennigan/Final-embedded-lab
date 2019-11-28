@@ -1,0 +1,7 @@
+calc.sh
+calculator.sh
+output.txt
+task4.sh
+writeToFile.sh
+writeToText_Output.txt
+writeToText_output.txt

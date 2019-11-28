@@ -1,7 +1,14 @@
 both.txt
+challenge1.sh
 errors.txt
 file.txt
+newfile
+permissions.txt
+quiz
+saved_password.txt
+shell
 task1.sh
 task2.sh
 task3.sh
 task4.sh
+text.txt
